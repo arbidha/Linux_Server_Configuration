@@ -139,6 +139,26 @@ ssh ubuntu@3.217.93.239 -p 2200 -i ~/.ssh/Catalog-Item.pem
 - Enter a password (twice) and fill out in`sudo adduser grader`formation for this new user.
 - Confirm if the user is added by `finger grader`. 
 
+### Step 7: Give `grader` the permission to sudo
+
+- list all the users file: `sudo ls /etc/sudoers.d `.
+- Read the content of the file and copy it to a new file grader:
+  ```
+  sudo cat /etc/sudoers.d/90-cloud-init-users
+  sudo cp /etc/sudoers.d/90-cloud-init-users /etc/sudoers.d/grader
+  ```
+
+- Run `sudo nano /etc/sudoers.d/grader ` Edit the line to give sudo privileges to `grader` user.
+  ```
+  grader  ALL=(ALL:ALL) ALL
+  ```
+
+- Save and exit using CTRL+X and confirm with Y.
+- Verify that `grader` has sudo permissions. Run `su - grader`, enter the password, 
+run `sudo -l` and enter the password again.
+
+**Resources**
+- DigitalOcean, [How To Add and Delete Users on an Ubuntu 14.04 VPS](https://www.digitalocean.com/community/tutorials/how-to-add-and-delete-users-on-an-ubuntu-14-04-vps)
 
 ## Running the tests
 
