@@ -130,6 +130,15 @@ Public IP address is 3.217.93.239.
 ssh ubuntu@3.217.93.239 -p 2200 -i ~/.ssh/Catalog-Item.pem
 -->
 
+## Give `grader` access
+
+
+### Step 6: Create a new user account named `grader`
+
+- While logged in as `ubuntu`, add user: `sudo adduser grader`. 
+- Enter a password (twice) and fill out in`sudo adduser grader`formation for this new user.
+- Confirm if the user is added by `finger grader`. 
+
 
 ## Running the tests
 
