@@ -1,8 +1,8 @@
 # Project Title : Linux_Server_Configuration
 This is the final project for "Full Stack Web Developer Nanodegree" on Udacity.
 A Linux virtual machine (Amazon Lightsail / Ubuntu) is configured for Item Catalog application website.
-You can visit the web site at : http://34.237.88.101/
-* Public Static IP Address: 34.237.88.101
+You can visit the web site at : http://3.217.93.239/
+* Public Static IP Address: 3.217.93.239
 * SSH Port: 2200
 * HTTP Port: 80
 * NTP Port: 123
@@ -18,21 +18,41 @@ This page explains how to secure and set up a Linux distribution on a virtual ma
 
 ## Get a Server 
 
-A step by step series of examples that tell you how to get a development env running
 
-Say what the step will be
+### Step 1: Start a new Ubuntu Linux server instance on Amazon Lightsail 
 
-```
-Give the example
-```
+- Login into [Amazon Lightsail](https://lightsail.aws.amazon.com/ls/webapp/home/resources) using an Amazon Web Services account.
+- Once you are login into the site, click `Create instance`. 
+- Choose `Linux/Unix` platform, `OS Only` and  `Ubuntu 16.04 LTS`.
+- Choose a instance plan (I took the cheapest, $3/month).
+- Keep the default name provided by AWS or rename your instance.
+- Click the `Create` button to create the instance.
+- Wait for the instance to start up.
+#### Create Static IP Address
+- Inside the instance dashboard .
+- On the Lightsail home page, choose Networking.
+- Choose Create static IP.
+- Select the AWS Region where you want to create your static IP.
+- Choose the Lightsail resource (Catalog-Item)
+- Name your static IP, and then choose Create.
 
-And repeat
+**Reference**
+- ServerPilot, [How to Create a Server on Amazon Lightsail](https://serverpilot.io/community/articles/how-to-create-a-server-on-amazon-lightsail.html).
+- [Create a static IP and attach it to an instance in Amazon Lightsail](https://lightsail.aws.amazon.com/ls/docs/en_us/articles/lightsail-create-static-ip).
 
-```
-until finished
-```
 
-End with an example of getting some data out of the system or using it for a little demo
+### Step 2: SSH into the server
+
+- From the `Account` menu on Amazon Lightsail, click on `SSH keys` tab and download the Default Private Key.
+- Move this private key file named `LightsailDefaultPrivateKey-*.pem` into the local folder `~/.ssh` and rename it `Catalog-Item.pem`.
+- In your terminal, type: `chmod 644 ~/.ssh/Catalog-Item.pem`.
+- To connect to the instance via the terminal: ` ssh ubuntu@3.217.93.239 -i ~/.ssh/Catalog-Item.pem`, 
+  where `3.217.93.239` is the public static IP address of the instance.
+
+<!--
+Public IP address is 13.59.39.163.
+ssh -i ~/.ssh/lightsail_key.rsa ubuntu@13.59.39.163
+-->
 
 ## Running the tests
 
