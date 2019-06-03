@@ -185,6 +185,21 @@ ssh grader@3.217.93.239 -p 2200 -i ~/.ssh/grader
 **References**
 - DigitalOcean, [How To Set Up SSH Keys](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2).
 - Ubuntu Wiki, [SSH/OpenSSH/Keys](https://help.ubuntu.com/community/SSH/OpenSSH/Keys).
+
+## Prepare to deploy the project
+
+### Step 9: Configure the local timezone to UTC
+
+- While logged in as `grader`, configure the time zone: `sudo dpkg-reconfigure tzdata`. You should see something like that:
+
+  ```
+    Current default time zone: 'US/Central'
+    Local time is now:      Mon Jun  3 04:43:32 CDT 2019.
+    Universal Time is now:  Mon Jun  3 09:43:32 UTC 2019.
+
+  ```
+
+
 ## Running the tests
 
 Explain how to run the automated tests for this system
