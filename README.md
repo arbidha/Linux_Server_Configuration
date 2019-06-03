@@ -160,6 +160,31 @@ run `sudo -l` and enter the password again.
 **Resources**
 - DigitalOcean, [How To Add and Delete Users on an Ubuntu 14.04 VPS](https://www.digitalocean.com/community/tutorials/how-to-add-and-delete-users-on-an-ubuntu-14-04-vps)
 
+### Step 8: Create an SSH key pair for `grader` using the `ssh-keygen` tool
+
+- On the local machine:
+  - Run `ssh-keygen`
+  - Enter file in which to save the key (I gave the name `grader`) in the local directory `~/.ssh`
+  - Enter in a passphrase twice. Two files will be generated (  `~/.ssh/grader` and `~/.ssh/grader.pub`)
+  - Run `cat ~/.ssh/grader.pub` and copy the contents of the file
+  - Log in to the grader's virtual machine `sudo su - grader`
+- On the grader's remote machine:
+  - Create a new directory called `~/.ssh` (`mkdir .ssh`)
+  - Run `sudo nano ~/.ssh/authorized_keys` and paste the content into this file, save and exit
+  - Give the permissions: `chmod 700 .ssh` and `chmod 644 .ssh/authorized_keys`
+  - Check in `/etc/ssh/sshd_config` file if `PasswordAuthentication` is set to `no`
+  - Restart SSH: `sudo service ssh restart`
+- On the local machine, run: ``ssh grader@3.217.93.239 -p 2200 -i ~/.ssh/grader``.
+
+<!--
+Public IP address is 3.217.93.239.
+ssh grader@3.217.93.239 -p 2200 -i ~/.ssh/grader
+
+-->
+
+**References**
+- DigitalOcean, [How To Set Up SSH Keys](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2).
+- Ubuntu Wiki, [SSH/OpenSSH/Keys](https://help.ubuntu.com/community/SSH/OpenSSH/Keys).
 ## Running the tests
 
 Explain how to run the automated tests for this system
