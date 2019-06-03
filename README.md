@@ -97,18 +97,21 @@ sudo apt-get autoremove
 - Check the status of UFW to list current roles: `sudo ufw status`. The output should be like this:
 
   ```
-  Status: active
+    Status: active
   
-  To                         Action      From
-  --                         ------      ----
-  2200/tcp                   ALLOW       Anywhere                  
-  80/tcp                     ALLOW       Anywhere                  
-  123/udp                    ALLOW       Anywhere                  
-  22                         DENY        Anywhere                  
-  2200/tcp (v6)              ALLOW       Anywhere (v6)             
-  80/tcp (v6)                ALLOW       Anywhere (v6)             
-  123/udp (v6)               ALLOW       Anywhere (v6)             
-  22 (v6)                    DENY        Anywhere (v6)
+    To                         Action      From
+    --                         ------      ----
+    2200/tcp                   ALLOW       Anywhere
+    80/tcp                     ALLOW       Anywhere
+    123/udp                    ALLOW       Anywhere
+    80                         ALLOW       Anywhere
+    22                         DENY        Anywhere
+    2200/tcp (v6)              ALLOW       Anywhere (v6)
+    80/tcp (v6)                ALLOW       Anywhere (v6)
+    123/udp (v6)               ALLOW       Anywhere (v6)
+    80 (v6)                    ALLOW       Anywhere (v6)
+    22 (v6)                    DENY        Anywhere (v6)
+
   ```
 
 - Exit the SSH connection: `exit`.
@@ -120,17 +123,12 @@ then the `Networking` tab, and then change the firewall configuration to match t
 - Allow ports 80(TCP), 123(UDP), and 2200(TCP), and deny the default port 22.
   <img src="images/screen5.png" width="600px">
 
-- From your local terminal, run: `ssh -i ~/.ssh/lightsail_key.rsa -p 2200 ubuntu@13.59.39.163`, where `13.59.39.163` is the public IP address of the instance.
+- From your local terminal, run: `ssh ubuntu@3.217.93.239 -p 2200 -i ~/.ssh/Catalog-Item.pem`, where `3.217.93.239` is the public IP address of the instance.
 
 <!--
-Public IP address is 13.59.39.163.
-ssh -i ~/.ssh/lightsail_key.rsa -p 2200 ubuntu@13.59.39.163
+Public IP address is 3.217.93.239.
+ssh ubuntu@3.217.93.239 -p 2200 -i ~/.ssh/Catalog-Item.pem
 -->
-
-**References**
-- Official Ubuntu Documentation, [UFW - Uncomplicated Firewall](https://help.ubuntu.com/community/UFW).
-- TechRepublic, [How to install and use Uncomplicated Firewall in Ubuntu](https://www.techrepublic.com/article/how-to-install-and-use-uncomplicated-firewall-in-ubuntu/).
-
 
 
 ## Running the tests
