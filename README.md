@@ -1,6 +1,7 @@
 # Project Title : Linux_Server_Configuration
 This is the final project for "Full Stack Web Developer Nanodegree" on Udacity.
 A Linux virtual machine (Amazon Lightsail / Ubuntu) is configured for Item Catalog application website.
+
 You can visit the web site at : http://3.217.93.239/
 * Public Static IP Address: 3.217.93.239
 * SSH Port: 2200
@@ -232,32 +233,42 @@ ssh grader@3.217.93.239 -p 2200 -i ~/.ssh/grader
 
 ## Deploy the Item Catalog project
 
-### Step 13: Clone and setup the Item Catalog project from the GitHub repository 
+### Step 13: 
+1. Clone and setup the Item Catalog project from the GitHub repository 
+	- While logged in as `grader`, Create application directory `/var/www/catalog/`.
+	- Change to that directory and clone the catalog project:<br>
+	  `sudo git clone https://github.com/arbidha/Item_Catalog.git catalog`.
+	-  Move to the inner catalog directory using `cd catalog`
+	- Rename the `application.py` file to `__init__.py` using: `sudo mv application.py __init__.py`.
 
-- While logged in as `grader`, Create application directory `/var/www/catalog/`.
-- Change to that directory and clone the catalog project:<br>
-  `sudo git clone https://github.com/arbidha/Item_Catalog.git catalog`.
--  Move to the inner catalog directory using `cd catalog`
-- Rename the `application.py` file to `__init__.py` using: `sudo mv application.py __init__.py`.
+	- In `__init__.py`, replace the following lines  below line:
+	   ```
+	   # engine = create_engine('sqlite:///catalogitemwithusers.db')
+	   engine = create_engine('postgresql://catalog:password@localhost/catalog')
+	   ``` 
 
-- In `__init__.py`, replace the following lines  below line:
-   ```
-   # engine = create_engine('sqlite:///catalogitemwithusers.db')
-   engine = create_engine('postgresql://catalog:password@localhost/catalog')
-   ``` 
+	  ```
+	  # app.run(host="0.0.0.0", port=8000, debug=True)
+	  app.run()
+	  ```
 
-  ```
-  # app.run(host="0.0.0.0", port=8000, debug=True)
-  app.run()
-  ```
-
-- In `database.py`, replace the following line:
-   ```
-   # engine = create_engine('sqlite:///catalogitemwithusers.db')
-   engine = create_engine('postgresql://catalog:password@localhost/catalog')
-   ```
-
-### Step 14.1: 
+	- In `database.py`, replace the following line:
+	   ```
+	   # engine = create_engine('sqlite:///catalogitemwithusers.db')
+	   engine = create_engine('postgresql://catalog:password@localhost/catalog')
+	   ```
+	   
+2. Authenticate login through Google 
+	- Go to [Google Cloud Plateform](https://console.cloud.google.com/).
+	- Click `APIs & services` on left menu.
+	- Add `Authorised Domains` and add ``3.217.93.239.xip.io`` .Click Save
+	- Click `Credentials`.
+	- Create an OAuth Client ID (under the Credentials tab), and add http://http://3.217.93.239.xio.io as authorized JavaScript origins.
+	- Add http://http://3.217.93.239.xio.io as authorized redirect URI.
+	- Download the corresponding JSON file, open it et copy the contents.
+	- Open `/var/www/catalog/catalog/client_secret.json` and paste the previous contents into the this file.
+	
+### Step 14: Set up the server, so that it functions correctly when visiting your server’s IP address in a browser
 1. Install the virtual environment and dependencies
 	- While logged in as `grader` , Install pip `sudo apt-get install python-pip`
 	- Install the virtual environment: ` sudo pip install virtualenv`
@@ -276,7 +287,6 @@ ssh grader@3.217.93.239 -p 2200 -i ~/.ssh/grader
 		  ```
 		  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 		  ```
-
 	- Deactivate the virtual environment: `deactivate`.
 	
 2.  Configure and Enable a New Virtual Host
@@ -337,12 +347,55 @@ ssh grader@3.217.93.239 -p 2200 -i ~/.ssh/grader
 		````
 
 **References**
+- Udacity's FSND Forum
 - Flask documentation, [virtualenv](http://flask.pocoo.org/docs/0.12/installation/).
 - [Create a Python 3 virtual environment](https://superuser.com/questions/1039369/create-a-python-3-virtual-environment).
 - [How To Deploy a Flask Application on an Ubuntu VPS](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
 
-## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+## Appendix
+- Tree structure 
+	1. Install tree 
+		````
+		sudo apt-get install tree
+		````
+	2. Project Folder structure
+		````
+		/var/www/catalog$ tree -L 2
+			.
+			├── catalog
+			│   ├── catalogitemwithusers.db
+			│   ├── client_secrets.json
+			│   ├── database_setup.py
+			│   ├── database_setup.pyc
+			│   ├── database_setup.py.save
+			│   ├── Demodatawithuser.py
+			│   ├── __init__.py
+			│   ├── __init__.pyc
+			│   ├── README.md
+			│   ├── static
+			│   ├── templates
+			│   └── venv
+			├── catalog.wsgi
+
+		````
+- If an internal error shows up when you try to access the app, 
+	- open Apache error log as a reference for debugging: 
+		````
+		$ sudo tail /var/log/apache2/error.log
+		````
+	- Restart server 
+		````
+		sudo service apache2 restart
+		````
+- Apache Not Restarting 
+	- Run this for debugging: 
+		````
+		$ systemctl status apache2.service
+ 		$ sudo journalctl -xe | tail
+		````
+- Syntax error in the file apache2.conf
+	- In terminal type: ` cd /etc/apache2 `
+	- Then : ` apache2ctl configtest `
+	- It will show you where is the error in the apache2.conf file to correct .
+- Find the version of python : ` which python ` or ` python -V `
