@@ -57,11 +57,11 @@ ssh ubuntu@3.217.93.239 -i ~/.ssh/Catalog-Item.pem
 
 ### Step 3: Update and upgrade installed packages
 
-```
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get autoremove
-```
+	```
+	sudo apt-get update
+	sudo apt-get upgrade
+	sudo apt-get autoremove
+	```
 
 
 ### Step 4: Change the SSH port from 22 to 2200
@@ -255,57 +255,91 @@ ssh grader@3.217.93.239 -p 2200 -i ~/.ssh/grader
    ```
    # engine = create_engine('sqlite:///catalogitemwithusers.db')
    engine = create_engine('postgresql://catalog:password@localhost/catalog')
-   ``` 
-- Install pip `sudo apt-get install python-pip`
-- Use pip to install dependencies -
+   ```
 
-## Running the tests
+### Step 14.1: 
+1. Install the virtual environment and dependencies
+	- While logged in as `grader` , Install pip `sudo apt-get install python-pip`
+	- Install the virtual environment: ` sudo pip install virtualenv`
+	- Change to the `/var/www/catalog/catalog/` directory.
+	- Create the virtual environment: `sudo pip install virtualenv`.
+	- Activate the new environment: `cd  `.
+	- Use pip to install dependencies -
+		- `sudo pip install sqlalchemy flask-sqlalchemy bleach requests`
+		- `sudo pip install flask packaging oauth2client redis passlib flask-httpauth`
+		- `sudo pip install flask github-flask httplib2 `
+		- `sudo apt-get -qqy install python-flask `
+	- Install psycopg2 `sudo apt-get -qqy install postgresql python-psycopg2`
+	- Create database schema `sudo python database_setup.py`
+	- Fill database `sudo python Demodatawithuser.py`
+	- Run `python __init__.py` and you should see:
+		  ```
+		  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+		  ```
 
-Explain how to run the automated tests for this system
+	- Deactivate the virtual environment: `deactivate`.
+	
+2.  Configure and Enable a New Virtual Host
+	- Issue the following command in your terminal: 
+		```` 
+		sudo nano /etc/apache2/sites-available/catalog.conf 
+		````
+		
+	- Add the following lines of code to the file to configure the virtual host.
+		````
+		<VirtualHost *:80>
+			ServerName 3.217.93.239
+			WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+			WSGIDaemonProcess catalog python-path=/var/www/catalog:/var/www/catalog/catalog/venv/lib/python2.7/site-packages
+			WSGIProcessGroup catalog
+			<Directory /var/www/catalog/catalog/>
+				Order allow,deny
+				Allow from all
+			</Directory>
+			Alias /static /var/www/catalog/catalog/static
+			<Directory /var/www/catalog/catalog/static/>
+				Order allow,deny
+				Allow from all
+			</Directory>
+			ErrorLog ${APACHE_LOG_DIR}/error.log
+			LogLevel warn
+			CustomLog ${APACHE_LOG_DIR}/access.log combined
+		</VirtualHost>
+		````
+		
+	- Enable the virtual host with the following command run: 
+		````
+		sudo a2ensite catalog
+		sudo service apache2 reload
+		````
+		
+3. Create the .wsgi File
+	- Create the .wsgi File under /var/www/FlaskApp:
+		````
+		cd /var/www/catalog
+		sudo nano catalog.wsgi 
+		````
+		
+	- Add the following lines of code to the flaskapp.wsgi file:
+		````
+		#! /usr/bin/python
+		import sys
+		import logging
+		logging.basicConfig(stream=sys.stderr)
+		sys.path.insert(0,"/var/www/catalog/")
 
-### Break down into end to end tests
+		from catalog import app as application
+		application.secret_key = 'super_secret_key'
+		````
+	- Restart Apache with the following command to apply the changes:
+		````
+		sudo service apache2 restart 
+		````
 
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+**References**
+- Flask documentation, [virtualenv](http://flask.pocoo.org/docs/0.12/installation/).
+- [Create a Python 3 virtual environment](https://superuser.com/questions/1039369/create-a-python-3-virtual-environment).
+- [How To Deploy a Flask Application on an Ubuntu VPS](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
 
 ## Acknowledgments
 
