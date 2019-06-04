@@ -198,7 +198,66 @@ ssh grader@3.217.93.239 -p 2200 -i ~/.ssh/grader
     Universal Time is now:  Mon Jun  3 09:43:32 UTC 2019.
 
   ```
+### Step 10: Install and configure Apache to serve a Python mod_wsgi application
 
+- While logged in as `grader`, Install Apache: `sudo apt-get install apache2`.
+- Install mod_wsgi `sudo apt-get install python-setuptools libapache2-mod-wsgi`
+- Restart Apache `sudo service apache2 restart`
+
+### Step 11: Install and configure PostgreSQL
+- Install PostgreSQL `sudo apt-get install postgresql`
+- Check if no remote connections are allowed `sudo nano /etc/postgresql/9.5/main/pg_hba.conf`
+- Login-  as user "postgres" `sudo su - postgres`
+- Get into postgreSQL shell `psql`
+- Create a new database named catalog  and create a new user named catalog in postgreSQL shell
+	
+	```
+	postgres=# CREATE USER catalog WITH PASSWORD 'password'; 
+ 	postgres=# CREATE DATABASE catalog WITH OWNER catalog; 
+	```
+-  Give user "catalog" permission to "catalog" application database
+	
+	```
+	postgres=# GRANT ALL PRIVILEGES ON DATABASE catalog TO catalog;
+	```
+- Quit postgreSQL `postgres=# \q`
+- Exit from user "postgres" 
+	
+	```
+	exit
+	```
+### Step 12: Install git
+
+- While logged in as `grader`, install `git` using: `sudo apt-get install git`.
+
+## Deploy the Item Catalog project
+
+### Step 13: Clone and setup the Item Catalog project from the GitHub repository 
+
+- While logged in as `grader`, Create application directory `/var/www/catalog/`.
+- Change to that directory and clone the catalog project:<br>
+  `sudo git clone https://github.com/arbidha/Item_Catalog.git catalog`.
+-  Move to the inner catalog directory using `cd catalog`
+- Rename the `application.py` file to `__init__.py` using: `sudo mv application.py __init__.py`.
+
+- In `__init__.py`, replace the following lines  below line:
+   ```
+   # engine = create_engine('sqlite:///catalogitemwithusers.db')
+   engine = create_engine('postgresql://catalog:password@localhost/catalog')
+   ``` 
+
+  ```
+  # app.run(host="0.0.0.0", port=8000, debug=True)
+  app.run()
+  ```
+
+- In `database.py`, replace the following line:
+   ```
+   # engine = create_engine('sqlite:///catalogitemwithusers.db')
+   engine = create_engine('postgresql://catalog:password@localhost/catalog')
+   ``` 
+- Install pip `sudo apt-get install python-pip`
+- Use pip to install dependencies -
 
 ## Running the tests
 
