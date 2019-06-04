@@ -3,19 +3,19 @@ This is the final project for "Full Stack Web Developer Nanodegree" on Udacity.
 A Linux virtual machine (Amazon Lightsail / Ubuntu) is configured for Item Catalog application website.
 
 You can visit the web site at : http://3.217.93.239/
-* Public Static IP Address: 3.217.93.239
-* SSH Port: 2200
-* HTTP Port: 80
-* NTP Port: 123
+	* Public Static IP Address: 3.217.93.239
+	* SSH Port: 2200
+	* HTTP Port: 80
+	* NTP Port: 123
 
 ## Environment Used
 
 This page explains how to secure and set up a Linux distribution on a virtual machine, install and configure a web and database server to host a web application..
-* The Linux distribution is Ubuntu 16.04 LTS.
-* The virtual private server is [Amazon Lighsail](https://aws.amazon.com/lightsail/).
-* The web application is my [Item Catalog ](https://github.com/arbidha/Item_Catalog)project created earlier in this Nanodegree program.
-* The database server is PostgreSQL.
-* Local machine Windows 10
+	* The Linux distribution is Ubuntu 16.04 LTS.
+	* The virtual private server is [Amazon Lighsail](https://aws.amazon.com/lightsail/).
+	* The web application is my [Item Catalog ](https://github.com/arbidha/Item_Catalog)project created earlier in this Nanodegree program.
+	* The database server is PostgreSQL.
+	* Local machine Windows 10
 
 ## Get a Server 
 
@@ -126,10 +126,10 @@ then the `Networking` tab, and then change the firewall configuration to match t
 
 - From your local terminal, run: `ssh ubuntu@3.217.93.239 -p 2200 -i ~/.ssh/Catalog-Item.pem`, where `3.217.93.239` is the public IP address of the instance.
 
-<!--
-Public IP address is 3.217.93.239.
-ssh ubuntu@3.217.93.239 -p 2200 -i ~/.ssh/Catalog-Item.pem
--->
+	<!--
+	Public IP address is 3.217.93.239.
+	ssh ubuntu@3.217.93.239 -p 2200 -i ~/.ssh/Catalog-Item.pem
+	-->
 
 ## Give `grader` access
 
@@ -144,15 +144,15 @@ ssh ubuntu@3.217.93.239 -p 2200 -i ~/.ssh/Catalog-Item.pem
 
 - list all the users file: `sudo ls /etc/sudoers.d `.
 - Read the content of the file and copy it to a new file grader:
-  ```
-  sudo cat /etc/sudoers.d/90-cloud-init-users
-  sudo cp /etc/sudoers.d/90-cloud-init-users /etc/sudoers.d/grader
-  ```
+	  ```
+	  sudo cat /etc/sudoers.d/90-cloud-init-users
+	  sudo cp /etc/sudoers.d/90-cloud-init-users /etc/sudoers.d/grader
+	  ```
 
 - Run `sudo nano /etc/sudoers.d/grader ` Edit the line to give sudo privileges to `grader` user.
-  ```
-  grader  ALL=(ALL:ALL) ALL
-  ```
+	  ```
+	  grader  ALL=(ALL:ALL) ALL
+	  ```
 
 - Save and exit using CTRL+X and confirm with Y.
 - Verify that `grader` has sudo permissions. Run `su - grader`, enter the password, 
@@ -177,11 +177,11 @@ run `sudo -l` and enter the password again.
   - Restart SSH: `sudo service ssh restart`
 - On the local machine, run: ``ssh grader@3.217.93.239 -p 2200 -i ~/.ssh/grader``.
 
-<!--
-Public IP address is 3.217.93.239.
-ssh grader@3.217.93.239 -p 2200 -i ~/.ssh/grader
+	<!--
+	Public IP address is 3.217.93.239.
+	ssh grader@3.217.93.239 -p 2200 -i ~/.ssh/grader
 
--->
+	-->
 
 **References**
 - DigitalOcean, [How To Set Up SSH Keys](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2).
