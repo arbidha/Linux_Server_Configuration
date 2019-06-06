@@ -3,10 +3,10 @@ This is the final project for "Full Stack Web Developer Nanodegree" on Udacity.
 A Linux virtual machine (Amazon Lightsail / Ubuntu) is configured for Item Catalog application website.
 
 You can visit the web site at : http://3.217.93.239.xip.io/
-	* Public Static IP Address: 3.217.93.239
-	* SSH Port: 2200
-	* HTTP Port: 80
-	* NTP Port: 123
+* Public Static IP Address: 3.217.93.239
+* SSH Port: 2200
+* HTTP Port: 80
+* NTP Port: 123
 
 ## Environment Used
 
