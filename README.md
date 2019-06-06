@@ -2,7 +2,7 @@
 This is the final project for "Full Stack Web Developer Nanodegree" on Udacity.
 A Linux virtual machine (Amazon Lightsail / Ubuntu) is configured for Item Catalog application website.
 
-You can visit the web site at : http://3.217.93.239/
+You can visit the web site at : http://3.217.93.239.xip.io/
 	* Public Static IP Address: 3.217.93.239
 	* SSH Port: 2200
 	* HTTP Port: 80
@@ -298,9 +298,9 @@ run `sudo -l` and enter the password again.
 	- Add the following lines of code to the file to configure the virtual host.
 		````
 		<VirtualHost *:80>
-			ServerName 3.217.93.239
-			WSGIScriptAlias / /var/www/catalog/catalog.wsgi
-			WSGIDaemonProcess catalog python-path=/var/www/catalog:/var/www/catalog/catalog/venv/lib/python2.7/site-packages
+		 	ServerName 3.217.93.239
+			ServerAlias http://3.217.93.239.xio.io
+			WSGIDaemonProcess catalog python-path=/var/www/catalog:/var/www/catalog/catalog/venv/lib/python2.7/sites-available
 			WSGIProcessGroup catalog
 			<Directory /var/www/catalog/catalog/>
 				Order allow,deny
@@ -314,6 +314,8 @@ run `sudo -l` and enter the password again.
 			ErrorLog ${APACHE_LOG_DIR}/error.log
 			LogLevel warn
 			CustomLog ${APACHE_LOG_DIR}/access.log combined
+			WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+
 		</VirtualHost>
 		````
 		
