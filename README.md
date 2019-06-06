@@ -11,11 +11,11 @@ You can visit the web site at : http://3.217.93.239.xip.io/
 ## Environment Used
 
 This page explains how to secure and set up a Linux distribution on a virtual machine, install and configure a web and database server to host a web application..
-	* The Linux distribution is Ubuntu 16.04 LTS.
-	* The virtual private server is [Amazon Lighsail](https://aws.amazon.com/lightsail/).
-	* The web application is my [Item Catalog ](https://github.com/arbidha/Item_Catalog)project created earlier in this Nanodegree program.
-	* The database server is PostgreSQL.
-	* Local machine Windows 10
+* The Linux distribution is Ubuntu 16.04 LTS.
+* The virtual private server is [Amazon Lighsail](https://aws.amazon.com/lightsail/).
+* The web application is my [Item Catalog ](https://github.com/arbidha/Item_Catalog)project created earlier in this Nanodegree program.
+* The database server is PostgreSQL.
+* Local machine Windows 10
 
 ## Get a Server 
 
